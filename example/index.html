@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<div id="app">
+  <button @click="pickImage">PickImage {{ message }}</button>
+</div>
+
+
+<script type="module">
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+    import NativeSdk from '../src/index.js'
+
+    const nativeSdk = new NativeSdk()
+
+    nativeSdk.invoke('pickImage', { 
+        count: 2,
+        success(files, ctx) {
+            console.log(files, ctx)
+        }
+    })
+
+    nativeSdk.invoke('pickImage', { 
+        count: 3,
+        success(files, ctx) {
+            console.log(files, ctx)
+        }
+    })
+
+    nativeSdk.invoke('pickImage', { 
+        count: 4,
+        success(files, ctx) {
+            console.log(files, ctx)
+        }
+    })
+
+    const app = createApp({
+        data() {
+            return {
+                message: 'Hello Vue!'
+            }
+        },
+        // template: `<button @click="pickImage">PickImage {{ message }}</button>`,
+        methods: {
+            pickImage() {
+                nativeSdk.invoke('pickImage', { 
+                    count: 10,
+                    success(files) {
+                        console.log(files)
+                    }
+                })
+            }
+        }
+    })
+    app.mount('#app')
+
+</script>
